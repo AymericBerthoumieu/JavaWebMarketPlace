@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js"
+            integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <title>Detail</title>
+</head>
+<body>
+<div th:replace="fragments/menu :: div"/></div>
+
+<div class="container">
+    <div class="row my-5">
+        <div class="col-sm-9  mx-auto">
+
+
+            <h3 class="text-primary text-center" th:text="'[Ref: '+${prod.id}+' ] '+${prod.name}"></h3>
+
+            <p style="text-align:center;">
+                <img th:src="@{'/uploads/' + ${prod.picture}}" alt="Picture product" height="300" width="300"/>
+            </p>
+
+
+            <table class="table col-sm-12" align="center">
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
+
+                <tbody>
+                <tr>
+                    <td th:text="${prod.description}"></td>
+                    <td th:text="'Quality: '+${prod.quality}"></td>
+                </tr>
+
+
+                <tr>
+                    <div th:if="${prod.quantity<1}">
+                        <td>Out of stock</td>
+                        <td>No order possible</td>
+                    </div>
+                    <div th:if="${prod.quantity>0}">
+                        <td th:text="'Quantity in stock: '+${prod.quantity}"></td>
+                        <td>
+                            <form th:action="@{/Order}" method="post">
+
+                                <input type="hidden"  th:value="${prod.id}" name="id">
+
+                                <div class="form-group">
+                                    <select name="quantity" class="form-control" style="width: 100px; float: left; margin-right: 10px; vertical-align: center" >
+                                        <div th:each="i : ${quant}">
+                                            <option th:text="${i}"></option>
+                                        </div>
+                                    </select>
+                                </div>
+                                <button class="btn btn-success" style="float: left; vertical-align: center"><i class="fas fa-cart-plus"></i></button>
+                            </form>
+                        </td>
+                    </div>
+                </tr>
+
+                <tr>
+                    <td>
+
+                        <!-- stars -->
+                        <div th:if="${note>=4.5}">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <div th:if="${3.5<=note && note<4.5}" >
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                        </div>
+                        <div th:if="${2.5<=note && note<3.5}" >
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+                        </div>
+                        <div th:if="${1.5<=note && note<2.5}" >
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+                        </div>
+                        <div th:if="${0.5<=note && note<1.5}" >
+                            <i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+                        </div>
+                        <div th:if="${note<0.5}" >
+                            <i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+                        </div>
+
+
+                    </td>
+
+                    <div th:if="${!liked}">
+
+                        <td>
+                            <!-- Form star -->
+                            <div th:if="${!starred}">
+                                <form th:action="@{/star}" method="post">
+                                    <input type="hidden"  th:value="${prod.id}" name="id">
+
+                                    <div class="form-group">
+                                        <select name="note" class="form-control" style="width: 100px; float: left; margin-right: 10px; vertical-align: top">
+                                            <option>0</option>
+                                            <option>*</option>
+                                            <option>**</option>
+                                            <option>***</option>
+                                            <option>****</option>
+                                            <option>*****</option>
+                                        </select>
+                                    </div>
+                                    <button class="btn btn-success" style="float: left; vertical-align: top">Note</button>
+                                </form>
+                            </div>
+
+                            <!-- like -->
+
+                            <a class="btn btn-danger" th:href="@{/LikeProduct/}+${prod.id}" style="float: right; vertical-align: center"><i class="fas fa-heart"></i></a>
+                        </td>
+                    </div>
+
+
+                    <div th:if="${liked}">
+                        <td>
+                            <!-- Form star -->
+                            <div th:if="${!starred}">
+                                <form th:action="@{/star}" method="post">
+                                    <input type="hidden"  th:value="${prod.id}" name="id">
+
+                                    <div class="form-group">
+                                        <select name="note" class="form-control" style="width: 100px; float: left; margin-right: 10px; vertical-align: top">
+                                            <option>0</option>
+                                            <option>*</option>
+                                            <option>**</option>
+                                            <option>***</option>
+                                            <option>****</option>
+                                            <option>*****</option>
+                                        </select>
+                                    </div>
+                                    <button class="btn btn-success" style="float: left; vertical-align: top">Note</button>
+                                </form>
+                            </div>
+
+                            <!-- unlike -->
+
+                            <a class="btn btn-danger" th:href="@{/UnLikeProduct/}+${prod.id}" style="float: right; vertical-align: center">Unlike</a>
+                        </td>
+                    </div>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

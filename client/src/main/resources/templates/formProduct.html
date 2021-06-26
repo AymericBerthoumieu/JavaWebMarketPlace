@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <title>Register new product</title>
+</head>
+<body>
+
+<div th:replace="fragments/menu :: div"/></div>
+
+
+<div class="container">
+    <div class="col-sm-6 my-3">
+        <h4 class="text-primary">Sell a new product</h4>
+        <form th:action="@{/saveProduct}" modelAttribute="product" method="post" enctype="multipart/form-data">
+            <input type="hidden"  th:value="${product.id}" name="id">
+            <input type="hidden"  th:value="${product.picture}" name="picture">
+
+            <h8 class="text-secondary">Name</h8>
+            <div class="form-group">
+                <input type="text"  th:value="${product.name}" name="name" class="form-control" placeholder="Name">
+            </div>
+
+            <h8 class="text-secondary">Description</h8>
+            <div class="form-group">
+                <input type="text" class="form-control" th:value="${product.description}"  name="description" placeholder="Be a good marketer. And don't forget to precise a price.">
+            </div>
+
+            <h8 class="text-secondary">Quality</h8>
+            <div class="form-group">
+                <select name="quality" class="form-control">
+                    <option th:value="New">New</option>
+                    <option th:value="Used">Used</option>
+                    <option th:value="Broken">Broken</option>
+                </select>
+            </div>
+
+            <h8 class="text-secondary">Image</h8>
+            <div class="form-group">
+                <input type="file" path="productImg" name="files"/>
+            </div>
+
+            <h8 class="text-secondary">Quantity</h8>
+            <div class="form-group">
+                <input type="text"  th:value="${product.quantity}" name="quantity" class="form-control" placeholder="0">
+            </div>
+
+            <button class="btn btn-success">Save</button>
+        </form>
+    </div>
+</div>
+
+
+
+</body>
+</html>

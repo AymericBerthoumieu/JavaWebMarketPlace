@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js"
+            integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <title>Detail Order</title>
+</head>
+<body>
+<div th:replace="fragments/menu :: div"/></div>
+
+<div class="container">
+    <div class="row my-5">
+        <div class="col-sm-9  mx-auto">
+
+            <h3 class="text-primary text-center">Order</h3>
+
+            <table class="table col-sm-6" align="center">
+                <tbody>
+                <tr>
+                    <th>ID</th>
+                    <td th:text="${order.order_id}"></td>
+                </tr>
+
+                <tr>
+                    <th>Date</th>
+                    <td th:text="${order.date}"></td>
+                </tr>
+
+                <tr>
+                    <th>Product</th>
+                    <td>Quantity</td>
+                </tr>
+
+                <tr>
+                    <td>If there is only numbers in this column</td>
+                    <td>It means the merchant had delete the product so you just see the id one by one</td>
+                </tr>
+
+                <th:block th:each="prod : ${products}">
+                    <tr>
+                        <td th:text="${prod.name}"></td>
+                        <td th:text="${prod.quantity}"></td>
+                    </tr>
+                </th:block>
+
+                </tbody>
+            </table>
+
+
+
+            <h3 class="text-primary text-center">Shipped to:</h3>
+
+            <h6 class="text-primary text-center" th:text="${ship.firstName}+' '+${ship.lastName}"></h6>
+            <h6 class="text-primary text-center" th:text="${ship.address}"></h6>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

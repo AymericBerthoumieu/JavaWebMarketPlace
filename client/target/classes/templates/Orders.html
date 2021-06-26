@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js"
+            integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <title>Orders</title>
+</head>
+<body>
+<div th:replace="fragments/menu :: div"/></div>
+
+<div class="container">
+    <div class="row my-5">
+        <div class="col-sm-8  mx-auto">
+
+
+            <div th:if="${currentOrder != null}">
+                <h3 class="text-primary text-center">Current Order</h3>
+                <table class="table col-sm-12" align="center">
+                    <tbody>
+                    <tr>
+                        <th>ID</th>
+                        <td th:text="${currentOrder.order_id}"></td>
+                    </tr>
+
+                    <tr>
+                        <th>Date</th>
+                        <td th:text="${currentOrder.date}"></td>
+                    </tr>
+
+                    <tr>
+                        <th>Name</th>
+                        <th>Quantity</th>
+                    </tr>
+
+                    <th:block th:each="prod : ${products}">
+                        <tr>
+                            <td th:text="${prod.name}"></td>
+                            <td th:text="${prod.quantity}"></td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+
+                <form th:action="@{/shipOrder/}+${currentOrder.order_id}" modelAttribute="currentOrder" method="post">
+                    <h8 class="text-secondary">Shipping</h8>
+                    <div class="form-group">
+                        <select class="custom-select" id="inputGroupSelect01"  name="shipping">
+                            <option th:each="ship : ${shippingList}" th:value="${ship.shipping_id}" th:text="${ship.firstName}+' '+${ship.lastName}+' '+${ship.address}"></option>
+                        </select>
+                    </div>
+
+                    <button class="btn btn-success">Ship</button>
+                </form>
+                <a class="btn btn-primary" th:href="@{/NewShipping}">Add an address</a>
+
+
+            </div>
+
+
+            <h3 class="text-primary text-center">History</h3>
+
+            <div th:if="${!orders.isEmpty()}">
+                <table class="table col-sm-12" align="center">
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Date</th>
+                        <th></th>
+                    </tr>
+                    <tbody>
+                    <th:block th:each="order : ${orders}">
+                        <tr>
+                            <td th:text="${order.order_id}"></td>
+                            <td th:text="${order.date}"></td>
+
+                            <td>
+                                <a class="btn btn-secondary" th:href="@{/detailOrder/}+${order.order_id}">Detail</a>
+                            </td>
+                        </tr>
+                    </th:block>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

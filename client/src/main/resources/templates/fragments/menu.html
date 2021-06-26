@@ -1,0 +1,77 @@
+<div xmlns:th="http://www.w3.org/1999/xhtml">
+
+    <div th:if="${user!=null}">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Nozama</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/home"> Home<span class="sr-only"></span></a>
+                    </li>
+
+
+                    <div th:if="${user.roles=='USER'}">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/likes">Products liked</a>
+                        </li>
+                    </div>
+                    <div th:if="${user.roles=='USER'}">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/listOrder">Order</a>
+                        </li>
+                    </div>
+
+                    <div th:if="${user.roles=='MERCHANT'}">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/CreateProduct">Sell a product</a>
+                        </li>
+                    </div>
+
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/UserPage">Settings</a>
+                    </li>
+
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <i class="fa fa-user"></i>  <label th:text="${user.firstName}">   </label>
+                    <a class="btn btn-outline-secondary my-2 my-sm-0 mx-5"
+                       type="submit"
+                       th:href="@{/logout}">Logout</a>
+                </form>
+            </div>
+        </nav>
+    </div>
+
+
+
+
+    <div th:if="${user==null}">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Nozama</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent2">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/login"> Login<span class="sr-only"></span></a>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signup">I'm new</a>
+                    </li>
+
+                </ul>
+
+            </div>
+        </nav>
+    </div>
+
+</div>

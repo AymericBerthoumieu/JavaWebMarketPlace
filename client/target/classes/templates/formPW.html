@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <title>Change Password</title>
+</head>
+<body>
+
+<div th:replace="fragments/menu :: div"/></div>
+
+<div class="container">
+    <div class="col-sm-6 my-3">
+        <h4 class="text-primary">Change your password</h4>
+        <form th:action="@{/processPW}" modelAttribute="user" method="post">
+
+
+            <h8 class="text-secondary">New Password</h8>
+            <div class="form-group">
+                <input type="password" size="6" name="PW1" class="form-control" placeholder="password" >
+            </div>
+            <h8 class="text-secondary">New Password</h8>
+            <div class="form-group">
+                <input type="password" size="6" name="PW2" class="form-control" placeholder="password" >
+            </div>
+            <div th:if="${wrongMatch}"> <h5 class="text-danger">The two passwords are not the same.</h5></div>
+
+            <button class="btn btn-success">Save changes</button>
+        </form>
+        <h4> </h4>
+        <a class="btn btn-primary" th:href="@{/UserPage}">Cancel</a>
+    </div>
+</div>
+</body>
+</html>
